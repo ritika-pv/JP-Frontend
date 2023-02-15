@@ -4,7 +4,6 @@ import { Header } from '../../components/common/header/header';
 import { TabOptions } from '../../components/common/tabs_feature/tab_options';
 import { Delivery } from '../../components/delivery/delivery';
 import { DiningOut } from '../../components/dining_out/dining_out';
-import { NightLife } from '../../components/night_life/night_life';
 
 const HomePage = () => {
   const [activeTab,setActiveTab] = useState("Delivery")
@@ -24,8 +23,6 @@ const getCorrectScreen=(tab)=>{
       return <Delivery/>
     case "Dining Out":
       return <DiningOut/>
-    case "Night Life":
-      return <NightLife/>
     default:
       return <div>Delivery</div>
   }
