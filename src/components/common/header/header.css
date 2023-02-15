@@ -22,7 +22,7 @@
   align-items: center;
   border: 2px solid var(--border-white);
   border-radius: 8px;
-  box-shadow: var(--primary-box-shadow);
+  box-shadow:var(--primary-box-shadow);
   width: 70%;
   height: 50px;
   background-color: var(--primary-bg);

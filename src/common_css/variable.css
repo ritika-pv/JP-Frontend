@@ -1,7 +1,7 @@
 #root {
-  --primary-box-shadow: rgb(28, 28, 28 / 8%) 0px 2px 8px;
+  --primary-box-shadow:  rgb(137, 135, 135) 1px 1px 2px;
   --border-white: rgb(232, 232, 232);
   --primary-bg: rgb(255, 255, 255);
   --grey-color: #828282;
-  --location-red:  #FF5F1F;
+  --location-red: #ff5f1f;
 }
