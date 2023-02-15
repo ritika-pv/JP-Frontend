@@ -43,7 +43,7 @@ export const Header = () => {
 
         <div className="profile-wrapper">
           {isLoggedIn ? (
-            <>
+            <> 
               <img
                 src={profile}
                 alt="Profile"
