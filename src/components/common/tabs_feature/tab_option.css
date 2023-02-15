@@ -28,7 +28,6 @@
 .active-tab{
     border-bottom: 2px solid var(--location-red);
 }
-
 .active-tab .tab-name{
     color: var(--location-red);
 }
