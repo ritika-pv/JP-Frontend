@@ -1,7 +1,11 @@
 import React from "react";
+import { restaurants } from "../../data/restaurant_data";
+import ExploreSection from "../common/explore_section/explore";
 import Filters from "../common/filters/filters";
 import "./delivery.css";
 import DeliveryCollections from "./delivery_collections/delivery_collection";
+
+const restaurantList = restaurants;
 const deliveryFilters = [
   {
     id: 1,
@@ -30,6 +34,7 @@ export const Delivery = () => {
         <Filters filterList = {deliveryFilters}/>
       </div>
       <DeliveryCollections/>
+      <ExploreSection list={restaurantList} collectionName = 'Top Dishes'/>
     </div>
   );
 };

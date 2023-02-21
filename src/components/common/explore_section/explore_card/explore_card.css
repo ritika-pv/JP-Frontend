@@ -1,0 +1,30 @@
+.explore-card {
+  margin: 12px 0px 24px 0px;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid transparent;
+}
+.explore-card-cover {
+  height: 240px;
+  width: 330px;
+  border-radius: 15px;
+  position: relative;
+}
+.explore-card-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+.delivery-time{
+    position: absolute;
+    right: 10px;
+    bottom:10px;
+    opacity: 0.8;
+    background-color: var(--primary-bg);
+    backdrop-filter: blur(4px);
+    font-weight: 600;
+    font-size: 12px;
+    padding: 2px 5px 3px;
+    border-radius: 5px;
+}
