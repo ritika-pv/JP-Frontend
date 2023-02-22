@@ -4,6 +4,7 @@
   box-shadow: var(--collection-shadow);
   border-radius: 8px;
   transition: box-shadow .3s;
+  cursor: pointer;
 }
 .delivery-item-image {
   object-fit: cover;
