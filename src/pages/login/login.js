@@ -12,15 +12,16 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
-import PasswordTwoToneIcon from '@mui/icons-material/PasswordTwoTone';
-import InputAdornment from '@mui/material/InputAdornment';
+import PasswordTwoToneIcon from "@mui/icons-material/PasswordTwoTone";
+import InputAdornment from "@mui/material/InputAdornment";
 import { useNavigate } from "react-router-dom";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Copyright(props) {
   return (
@@ -44,6 +45,14 @@ const theme = createTheme();
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -128,7 +137,7 @@ const LoginPage = () => {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
                 InputProps={{
@@ -137,7 +146,20 @@ const LoginPage = () => {
                       <PasswordTwoToneIcon />
                     </InputAdornment>
                   ),
+                  endAdornment:(
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
                 }}
+                
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -175,7 +197,7 @@ const LoginPage = () => {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <Copyright sx={{ mt: 50 }} />
             </Box>
           </Box>
         </Grid>
