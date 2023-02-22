@@ -7,9 +7,6 @@ const ExploreCard = ({ restaurant }) => {
   const deliveryTime = restaurant?.order?.deliveryTime ?? "";
   const rating = restaurant?.info?.rating?.rating_text ?? "";
   const approxPrice = restaurant?.info?.cfo?.text ?? "";
-  const cuisines = restaurant?.info?.cuisine
-    ?.map((item) => item.name)
-    .slice(0, 3);
   const offers = restaurant?.bulkOffers ?? [];
   const discount =
     offers.length > 1
