@@ -5,6 +5,7 @@ import LoginPage from "./pages/login/login";
 import RegisterPage from "./pages/register/register";
 import { Provider } from "react-redux";
 import { Store } from "./store";
+import CartPage from "./pages/cart/cart";
 
 function isLoggedIn() {
   const usetData = localStorage.getItem("userData");
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/cart" element={<CartPage/>}/>
         </Routes>
       </Router>
     </Provider>
