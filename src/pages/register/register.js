@@ -1,5 +1,4 @@
 import { useState, useEffect, React } from "react";
-import { getAllStates } from "../../data/fetch_state.js";
 import "./register.css";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";
@@ -25,6 +24,8 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Face6TwoToneIcon from "@mui/icons-material/Face6TwoTone";
 import { setUserData } from "../../Utilities/Helper/function";
 import { apiInstance } from "../../Utilities/Axios/apiServices";
+import GetAllStates from "../../data/fetch_state";
+import { getState } from "../../reducers/state_slice";
 
 function Copyright(props) {
   return (
@@ -52,8 +53,7 @@ const handleKeyPress = (event) => {
 };
 
 const RegisterPage = () => {
-  const listOfStates = getAllStates();
-  console.log(listOfStates);
+  const dispatch = useDispatch(); 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {

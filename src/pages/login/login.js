@@ -75,7 +75,6 @@ const LoginPage = () => {
     //     Submit Login
     //   </button>
     // </div>
-
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
@@ -112,7 +111,7 @@ const LoginPage = () => {
             </Typography>
             <Box
               component="form"
-              Validate
+             
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
