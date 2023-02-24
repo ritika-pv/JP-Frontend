@@ -22,6 +22,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { setUserData } from "../../Utilities/Helper/function";
+import { apiInstance } from "../../Utilities/Axios/apiServices";
 
 function Copyright(props) {
   return (
@@ -32,7 +34,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/"  underline="hover">
+      <Link color="inherit" href="https://mui.com/" underline="hover">
         FoodPanda
       </Link>{" "}
       {new Date().getFullYear()}
@@ -146,20 +148,19 @@ const LoginPage = () => {
                       <PasswordTwoToneIcon />
                     </InputAdornment>
                   ),
-                  endAdornment:(
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 }}
-                
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

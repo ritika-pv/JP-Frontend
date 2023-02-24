@@ -1,12 +1,14 @@
 import axios from "axios";
 
-export const GetAllStates = async () => {
+export async function getAllStates() {
   try {
-    const response = await axios.get('https://cdn-api.co-vin.in/api/v2/admin/location/states');
-    const states = response.data.states;
-    return states.map(state => state.state_name);
+    const response = await axios
+      .get("http://localhost:3003/api/get-states");
+      
+
+  return response.data.states;
   } catch (error) {
     console.error(error);
     return null;
   }
-};
+}
