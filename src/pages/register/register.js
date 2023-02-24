@@ -63,8 +63,11 @@ const RegisterPage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      fname:data.get("fname"),
+      lname:data.get("lname"),
       email: data.get("email"),
       password: data.get("password"),
+      phone:data.get("phone")
     });
   };
 

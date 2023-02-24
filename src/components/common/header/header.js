@@ -3,16 +3,16 @@ import "./header.css";
 import logo from "../../../images/logo.png";
 import profile from "../../../images/profile.jpg";
 import MyTextButton from "../button/buttons";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const navigate = useNavigate();
 
   function handleLogin() {
-    navigate('/login');
+    navigate("/login");
   }
   function handleSignup() {
-    navigate('/register');
+    navigate("/register");
   }
   const isLoggedIn = false;
 

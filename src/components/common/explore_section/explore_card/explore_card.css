@@ -1,6 +1,6 @@
 .explore-card {
   margin: 12px 0px 24px 0px;
-  transition: box-shadow .3s;
+  transition: box-shadow 0.3s;
   padding: 10px;
   border-radius: 15px;
   border: 1px solid transparent;
@@ -75,8 +75,13 @@
   font-size: 14px;
   color: var(--inactive-text);
 }
-.explore-card:hover{
+.explore-card:hover {
   background-color: var(--primary-bg);
   border: 1px solid var(--border-white);
-  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+.add-to-cart {
+  background-color: black !important;
+  align-items: center !important;
+  bottom: 8px !important;
 }
