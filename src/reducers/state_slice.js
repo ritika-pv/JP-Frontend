@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  list: [],
+  value: { list: [] },
 };
-const StateSlice = createSlice({
+ const StateSlice = createSlice({
   name: "stateList",
   initialState: initialState,
   reducers: {
     getState: (state, action) => {
-      state.list = action.payload;
+      state.value = action.payload;
     },
   },
 });

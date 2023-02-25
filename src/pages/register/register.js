@@ -23,9 +23,10 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Face6TwoToneIcon from "@mui/icons-material/Face6TwoTone";
 import { setUserData } from "../../Utilities/Helper/function";
-import { apiInstance } from "../../Utilities/Axios/apiServices";
-import GetAllStates from "../../data/fetch_state";
+import { apiInstance } from "../../Utilities/Axios/apiConfig";
 import { getState } from "../../reducers/state_slice";
+import { getAllStates } from "../../data/fetch_state";
+import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 function Copyright(props) {
   return (
@@ -44,6 +45,7 @@ function Copyright(props) {
     </Typography>
   );
 }
+
 const theme = createTheme();
 const handleKeyPress = (event) => {
   const regex = /^[0-9\b]+$/; // regular expression to allow only numeric values
@@ -53,9 +55,30 @@ const handleKeyPress = (event) => {
 };
 
 const RegisterPage = () => {
-  const dispatch = useDispatch(); 
+  const [stateList, setStateList] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async function getAllstatesData() {
+      let states = await getAllStates();
+      console.log(": states :: ", states);
+      dispatch(getState({ list: states }));
+      setStateList(states);
+    })();
+  }, []);
+
+  let allStates;
+  if (stateList) {
+    allStates = stateList.map((stateData, index) => {
+      return (
+        <MenuItem key={index} value={stateData._id}> {stateData.name}</MenuItem>
+      );
+    });
+  }
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -63,11 +86,11 @@ const RegisterPage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      fname:data.get("fname"),
-      lname:data.get("lname"),
+      fname: data.get("fname"),
+      lname: data.get("lname"),
       email: data.get("email"),
       password: data.get("password"),
-      phone:data.get("phone")
+      phone: data.get("phone"),
     });
   };
 
@@ -190,28 +213,41 @@ const RegisterPage = () => {
                   ),
                 }}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="phone"
-                label="Mobile Number"
-                name="phone"
-                autoComplete="phone"
-                onKeyPress={handleKeyPress}
-                autoFocus
-                inputProps={{ maxLength: 10 }}
-                InputProps={{
-                  inputMode: "number",
-                  pattern: "[0-9]*",
-                  maxLength: 10,
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircleTwoToneIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              <div className="first-last">
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Mobile Number"
+                  name="phone"
+                  autoComplete="phone"
+                  onKeyPress={handleKeyPress}
+                  autoFocus
+                  inputProps={{ maxLength: 10 }}
+                  InputProps={{
+                    inputMode: "number",
+                    pattern: "[0-9]*",
+                    maxLength: 10,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircleTwoToneIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={110}
+                    label="Age"
+                  >
+                    {allStates ? allStates : "Loading.."}
+                  </Select>
+                </FormControl>
+              </div>
 
               <Button
                 type="submit"

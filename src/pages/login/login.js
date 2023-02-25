@@ -23,7 +23,8 @@ import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { setUserData } from "../../Utilities/Helper/function";
-import { apiInstance } from "../../Utilities/Axios/apiServices";
+import { apiInstance } from "../../Utilities/Axios/apiConfig";
+import  {loginUserService}  from "../../Utilities/Axios/apiService";
 
 function Copyright(props) {
   return (
@@ -55,20 +56,31 @@ const LoginPage = () => {
     event.preventDefault();
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      let userData = await  loginUserService({
+        email: data.get("email"),
+        password: data.get("password"),
+  
+      });
+
+      console.log(":: userData :: ", userData.data.user);
+      userData.data.user.token = userData.data.token
+      console.log("details with token :: ", userData.data.user);
+      setUserData(userData.data.user);
+
+    } catch (error) {
+      console.log("Login Failed With Error---", error);
+    }
   };
 
   const [newUserData, setNewUserData] = useState("");
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.value.user_data);
   return (
-    // <div>
+    // <div>stateList
     //   {userData}
     //   <input onChange={(e) => setNewUserData(e.target.value)} />
     //   <button onClick={()=>dispatch(login({user_data:newUserData}))}>
@@ -109,12 +121,7 @@ const LoginPage = () => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-             
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required

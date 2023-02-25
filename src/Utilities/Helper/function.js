@@ -1,12 +1,10 @@
-let key ='userData';
+let key = "userData";
 
-module.exports = {
+export const setUserData = async (userData) => {
+  console.log(":: userData :: ", userData);
+  localStorage.setItem(key, JSON.stringify(userData));
+};
 
-    setUserData : async(userData)=>{
-        localStorage.setItem(key,userData);
-    },
-
-    getUserata : async()=>{
-       return localStorage.getItem(key);
-    }
-}
+export const getUserata = async () => {
+  return JSON.parse(localStorage.getItem(key));
+};
