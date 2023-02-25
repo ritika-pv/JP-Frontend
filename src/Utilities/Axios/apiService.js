@@ -16,11 +16,20 @@ export const loginUserService = async (data) => {
   });
 };
 export const registerUserService = async (data) => {
-  console.log("payload", data);
   return new Promise(async (resolve, reject) => {
     try {
       let registerData = await apiInstance.post("/register", data);
       resolve(registerData);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+export const getCategories = async () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let categories = await apiInstance.get("/category");
+      resolve(categories);
     } catch (error) {
       reject(error);
     }

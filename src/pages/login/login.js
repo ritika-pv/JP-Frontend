@@ -24,7 +24,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { setUserData } from "../../Utilities/Helper/function";
 import { apiInstance } from "../../Utilities/Axios/apiConfig";
-import  {loginUserService}  from "../../Utilities/Axios/apiService";
+import { loginUserService } from "../../Utilities/Axios/apiService";
 
 function Copyright(props) {
   return (
@@ -49,6 +49,7 @@ const theme = createTheme();
 const LoginPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -60,33 +61,18 @@ const LoginPage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      let userData = await  loginUserService({
+      let userData = await loginUserService({
         email: data.get("email"),
         password: data.get("password"),
-  
       });
-
-      console.log(":: userData :: ", userData.data.user);
-      userData.data.user.token = userData.data.token
-      console.log("details with token :: ", userData.data.user);
       setUserData(userData.data.user);
-
+      dispatch(login({ user_data: userData.data.user }));
     } catch (error) {
       console.log("Login Failed With Error---", error);
     }
   };
 
-  const [newUserData, setNewUserData] = useState("");
-  const dispatch = useDispatch();
-  const userData = useSelector((state) => state.user.value.user_data);
   return (
-    // <div>stateList
-    //   {userData}
-    //   <input onChange={(e) => setNewUserData(e.target.value)} />
-    //   <button onClick={()=>dispatch(login({user_data:newUserData}))}>
-    //     Submit Login
-    //   </button>
-    // </div>
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />

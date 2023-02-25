@@ -38,6 +38,7 @@ import { registerUserService } from "../../Utilities/Axios/apiService";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { login } from "../../reducers/user_slice";
 
 function Copyright(props) {
   return (
@@ -66,20 +67,6 @@ const handleKeyPress = (event) => {
 };
 
 const RegisterPage = () => {
-  //Alert Dialog
-  const [open, setOpen] = React.useState(false);
-  const handleClick = () => {
-    setOpen(true);
-  };
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
-  //Alert Ends
-
   const [stateList, setStateList] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [cityList, setCityList] = useState([]);
@@ -103,7 +90,7 @@ const RegisterPage = () => {
       dispatch(getState({ list: states }));
       setStateList(states);
     })();
-  }, []);
+  }, [dispatch]);
 
   let allStates;
   if (stateList) {
@@ -151,6 +138,7 @@ const RegisterPage = () => {
         address: data.get("address"),
       });
       setUserData(userData.data.user);
+      dispatch(login({ user_data: userData.data.user }));
     } catch (error) {
       console.log("Registration Failed--", error.response.data.message);
     }

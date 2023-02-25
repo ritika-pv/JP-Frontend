@@ -5,12 +5,12 @@ const DeliveryItems = ({ item }) => {
     <div>
       <div className="delivery-item-cover">
         <img
-          src={item.cover}
+          src={item.images.url}
           className="delivery-item-image"
-          alt={item.title}
+          alt={item.images.public_id}
         />
       </div>
-      <div className="delivery-item-title">{item.title}</div>
+      <div className="delivery-item-title">{item.category_name}</div>
     </div>
   );
 };
