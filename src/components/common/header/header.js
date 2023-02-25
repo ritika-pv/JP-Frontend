@@ -61,7 +61,7 @@ export const Header = () => {
                 alt="Profile"
                 className="header-profile-image"
               />
-              <span className="profile-username">John Wick</span>
+              <span className="profile-username">{userData.fname}</span>
               <i class="fi fi-rr-angle-down absolute-center profile-option-down"></i>
             </>
           ) : (
