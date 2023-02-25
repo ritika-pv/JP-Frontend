@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   value: { list: [] },
 };
- const StateSlice = createSlice({
+const StateSlice = createSlice({
   name: "stateList",
   initialState: initialState,
   reducers: {

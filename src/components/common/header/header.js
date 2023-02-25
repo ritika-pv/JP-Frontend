@@ -1,20 +1,29 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import "./header.css";
 import logo from "../../../images/logo.png";
 import profile from "../../../images/profile.jpg";
 import MyTextButton from "../button/buttons";
 import { useNavigate } from "react-router-dom";
+import { getUserData } from "../../../Utilities/Helper/function";
 
 export const Header = () => {
   const navigate = useNavigate();
-
+  const [userData, setUserData] = useState("");
   function handleLogin() {
     navigate("/login");
   }
   function handleSignup() {
     navigate("/register");
   }
-  const isLoggedIn = false;
+
+  useEffect(() => {
+    (async function fetchUserData() {
+      let user = await getUserData();
+      setUserData(user);
+    })();
+  }, "");
+
+  const isLoggedIn = userData ? true : false;
 
   return (
     <div className="max-width header">

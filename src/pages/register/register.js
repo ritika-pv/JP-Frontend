@@ -22,11 +22,22 @@ import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Face6TwoToneIcon from "@mui/icons-material/Face6TwoTone";
+import LocalPhoneTwoToneIcon from "@mui/icons-material/LocalPhoneTwoTone";
 import { setUserData } from "../../Utilities/Helper/function";
 import { apiInstance } from "../../Utilities/Axios/apiConfig";
 import { getState } from "../../reducers/state_slice";
-import { getAllStates } from "../../data/fetch_state";
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { getCities } from "../../reducers/city_slice";
+import { getAllStates, getSelectedStateData } from "../../data/fetch_state";
+import FiberPinOutlinedIcon from "@mui/icons-material/FiberPinOutlined";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import { registerUserService } from "../../Utilities/Axios/apiService";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -55,13 +66,40 @@ const handleKeyPress = (event) => {
 };
 
 const RegisterPage = () => {
+  //Alert Dialog
+  const [open, setOpen] = React.useState(false);
+  const handleClick = () => {
+    setOpen(true);
+  };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+  //Alert Ends
+
   const [stateList, setStateList] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  const [cityList, setCityList] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+
   const dispatch = useDispatch();
+
+  const handleStateChange = async (event) => {
+    setSelectedState(event.target.value);
+    let cities = await getSelectedStateData(event.target.value);
+    setCityList(cities);
+    dispatch(getCities({ cities: cities }));
+  };
+  const handleCityChange = async (event) => {
+    setSelectedCity(event.target.value);
+  };
 
   useEffect(() => {
     (async function getAllstatesData() {
       let states = await getAllStates();
-      console.log(": states :: ", states);
       dispatch(getState({ list: states }));
       setStateList(states);
     })();
@@ -71,7 +109,22 @@ const RegisterPage = () => {
   if (stateList) {
     allStates = stateList.map((stateData, index) => {
       return (
-        <MenuItem key={index} value={stateData._id}> {stateData.name}</MenuItem>
+        <MenuItem key={index} value={stateData.name}>
+          {" "}
+          {stateData.name}
+        </MenuItem>
+      );
+    });
+  }
+
+  let allCities;
+  if (cityList) {
+    allCities = cityList.map((cityData, index) => {
+      return (
+        <MenuItem key={index} value={cityData.name}>
+          {" "}
+          {cityData.name}
+        </MenuItem>
       );
     });
   }
@@ -82,16 +135,25 @@ const RegisterPage = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      fname: data.get("fname"),
-      lname: data.get("lname"),
-      email: data.get("email"),
-      password: data.get("password"),
-      phone: data.get("phone"),
-    });
+    try {
+      let userData = await registerUserService({
+        fname: data.get("fname"),
+        lname: data.get("lname"),
+        email: data.get("email"),
+        password: data.get("password"),
+        phone: data.get("phone"),
+        state: selectedState,
+        city: selectedCity,
+        zip: data.get("zipcode"),
+        address: data.get("address"),
+      });
+      setUserData(userData.data.user);
+    } catch (error) {
+      console.log("Registration Failed--", error.response.data.message);
+    }
   };
 
   return (
@@ -231,23 +293,81 @@ const RegisterPage = () => {
                     maxLength: 10,
                     startAdornment: (
                       <InputAdornment position="start">
-                        <AccountCircleTwoToneIcon />
+                        <LocalPhoneTwoToneIcon />
                       </InputAdornment>
                     ),
                   }}
                 />
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                <FormControl required fullWidth sx={{ m: 1, pt: 1 }}>
+                  <InputLabel id="demo-simple-select-label">States</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={110}
-                    label="Age"
+                    value={selectedState}
+                    onChange={handleStateChange}
+                    label="State"
                   >
                     {allStates ? allStates : "Loading.."}
                   </Select>
                 </FormControl>
               </div>
+              <div className="first-last">
+                <FormControl
+                  required
+                  fullWidth
+                  sx={{ mt: 1, mr: 1, mb: 1, pt: 1 }}
+                >
+                  <InputLabel id="demo-simple-select-label">City</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={selectedCity}
+                    onChange={handleCityChange}
+                    label="City"
+                  >
+                    {allCities ? allCities : "Loading.."}
+                  </Select>
+                </FormControl>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="zipcode"
+                  label="ZipCode"
+                  name="zipcode"
+                  autoComplete="zipcode"
+                  onKeyPress={handleKeyPress}
+                  autoFocus
+                  inputProps={{ maxLength: 6 }}
+                  InputProps={{
+                    inputMode: "number",
+                    pattern: "[0-9]*",
+                    maxLength: 6,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <FiberPinOutlinedIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </div>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="address"
+                label="Address"
+                name="address"
+                autoComplete="address"
+                autoFocus
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <HomeOutlinedIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
               <Button
                 type="submit"

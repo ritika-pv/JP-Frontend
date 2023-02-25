@@ -5,6 +5,6 @@ export const setUserData = async (userData) => {
   localStorage.setItem(key, JSON.stringify(userData));
 };
 
-export const getUserata = async () => {
+export const getUserData = async () => {
   return JSON.parse(localStorage.getItem(key));
 };
