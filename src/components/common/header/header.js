@@ -1,14 +1,38 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./header.css";
 import logo from "../../../images/logo.png";
 import profile from "../../../images/profile.jpg";
 import MyTextButton from "../button/buttons";
 import { useNavigate } from "react-router-dom";
-import { getUserData } from "../../../Utilities/Helper/function";
+import {
+  clearLocalStorage,
+  getUserData,
+} from "../../../Utilities/Helper/function";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Logout from "@mui/icons-material/Logout";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../../reducers/user_slice";
 
 export const Header = () => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState("");
+  const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   function handleLogin() {
     navigate("/login");
   }
@@ -16,13 +40,8 @@ export const Header = () => {
     navigate("/register");
   }
 
-  useEffect(() => {
-    (async function fetchUserData() {
-      let user = await getUserData();
-      setUserData(user);
-    })();
-  }, "");
-
+  const userData = useSelector((state) => state.user.value['user_data']);
+  console.log(userData,"userData");
   const isLoggedIn = userData ? true : false;
 
   return (
@@ -55,15 +74,87 @@ export const Header = () => {
 
         <div className="profile-wrapper">
           {isLoggedIn ? (
-            <>
-              <img
-                src={profile}
-                alt="Profile"
-                className="header-profile-image"
-              />
-              <span className="profile-username">{userData.fname}</span>
-              <i class="fi fi-rr-angle-down absolute-center profile-option-down"></i>
-            </>
+            <React.Fragment>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                <Tooltip title="Account settings">
+                  <IconButton
+                    onClick={handleClick}
+                    size="small"
+                    sx={{ ml: 2 }}
+                    aria-controls={open ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                  >
+                    <Avatar sx={{ width: 60, height: 60, bgcolor: "#DB5520" }}>
+                      {userData.fname[0]}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <MenuItem onClick={handleClose}>
+                  <Avatar>
+                    <ShoppingCartOutlinedIcon />
+                  </Avatar>
+                  My Cart
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Avatar /> My Profile
+                </MenuItem>
+                <Divider />
+                <MenuItem
+                  onClick={() => {
+                    dispatch(logout())
+                    clearLocalStorage();
+                  }}
+                >
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </React.Fragment>
           ) : (
             <div className="not-logged-in absolute-center">
               <div className="log-in">

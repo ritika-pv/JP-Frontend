@@ -67,6 +67,9 @@ const LoginPage = () => {
       });
       setUserData(userData.data.user);
       dispatch(login({ user_data: userData.data.user }));
+      if(userData.data.user){
+        navigate("/");
+      }
     } catch (error) {
       console.log("Login Failed With Error---", error);
     }
