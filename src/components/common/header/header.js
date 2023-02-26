@@ -39,9 +39,15 @@ export const Header = () => {
   function handleSignup() {
     navigate("/register");
   }
+  const [userData, setUserDataLocal] = useState("");
 
-  const userData = useSelector((state) => state.user.value['user_data']);
-  console.log(userData,"userData");
+  useEffect(() => {
+   (async function fetchLocalDataFromStorage(){
+    const local  = await getUserData();
+    setUserDataLocal(local);
+   })()
+  }, []);
+  console.log(userData, "userData");
   const isLoggedIn = userData ? true : false;
 
   return (
@@ -142,12 +148,13 @@ export const Header = () => {
                   <Avatar /> My Profile
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Avatar/>  My Order
+                  <Avatar /> My Order
                 </MenuItem>
                 <Divider />
                 <MenuItem
                   onClick={() => {
-                    dispatch(logout())
+                    setUserDataLocal("");
+                    dispatch(logout());
                     clearLocalStorage();
                   }}
                 >
@@ -162,10 +169,9 @@ export const Header = () => {
             <div className="not-logged-in absolute-center">
               <div className="log-in">
                 <MyTextButton
-                  
                   className="sign-in-button"
                   onClick={handleLogin}
-                  background={{ color: "#256fef"}}
+                  background={{ color: "#256fef" }}
                   style={{ color: "#ff5f1f" }}
                   label="Log In"
                 />
