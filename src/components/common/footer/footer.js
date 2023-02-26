@@ -13,13 +13,13 @@ import "./footer.css";
 export const Footer = () => {
   return (
     <MDBFooter className="text-center" color="white" bgColor="dark">
-      <MDBContainer className="p-4">
+      <MDBContainer className="p-3">
         <section className="mb-4">
           <MDBBtn
             outline
             color="light"
             floating
-            className="m-1"
+            className="m-2"
             href="#!"
             role="button"
           >
@@ -30,8 +30,8 @@ export const Footer = () => {
             outline
             color="light"
             floating
-            className="m-1"
-            href="#!"
+            className="m-2"
+            href="https://twitter.com/"
             role="button"
           >
             <MDBIcon fab icon="twitter" />
@@ -41,19 +41,20 @@ export const Footer = () => {
             outline
             color="light"
             floating
-            className="m-1"
+            className="m-2"
             href="#!"
             role="button"
           >
             <MDBIcon fab icon="google" />
           </MDBBtn>
 
+
           <MDBBtn
             outline
             color="light"
             floating
-            className="m-1"
-            href="#!"
+            className="m-2 "
+            href="https://www.instagram.com/"
             role="button"
           >
             <MDBIcon fab icon="instagram" />
@@ -63,7 +64,7 @@ export const Footer = () => {
         <section className="">
           <form action="">
             <MDBRow className="d-flex justify-content-center">
-              <MDBCol size="auto">
+              <MDBCol size="auto"  >
                 <p className="pt-2">
                   <strong>Sign up for our newsletter</strong>
                 </p>

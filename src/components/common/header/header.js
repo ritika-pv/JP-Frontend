@@ -91,7 +91,7 @@ export const Header = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
-                    <Avatar sx={{ width: 60, height: 60, bgcolor: "#DB5520" }}>
+                    <Avatar sx={{ width: 60, height: 60, bgcolor: "#FB2B55" }}>
                       {userData.fname[0]}
                     </Avatar>
                   </IconButton>
@@ -141,6 +141,9 @@ export const Header = () => {
                 <MenuItem onClick={handleClose}>
                   <Avatar /> My Profile
                 </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Avatar/>  My Order
+                </MenuItem>
                 <Divider />
                 <MenuItem
                   onClick={() => {
@@ -159,8 +162,10 @@ export const Header = () => {
             <div className="not-logged-in absolute-center">
               <div className="log-in">
                 <MyTextButton
+                  
                   className="sign-in-button"
                   onClick={handleLogin}
+                  background={{ color: "#256fef"}}
                   style={{ color: "#ff5f1f" }}
                   label="Log In"
                 />
