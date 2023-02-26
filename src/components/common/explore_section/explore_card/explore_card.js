@@ -4,24 +4,18 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
 
-const ExploreCard = ({ restaurant }) => {
+const ExploreCard = ({ dishes }) => {
   const [style, setStyle] = useState({ visibility: "hidden" });
-  const name = restaurant?.info?.name ?? "";
-  const coverImg = restaurant?.info?.image?.url;
-  const deliveryTime = restaurant?.order?.deliveryTime ?? "";
-  const rating = restaurant?.info?.rating?.rating_text ?? "";
-  const approxPrice = restaurant?.info?.cfo?.text ?? "";
-  const offers = restaurant?.bulkOffers ?? [];
-  const discount =
-    offers.length > 1
-      ? offers[1].text
-      : offers.length === 1
-      ? offers[0].text
-      : null;
-      const handleAddtoCart = () => {
-        console.log('Button clicked!');
-        // Your code here to handle the button click event
-      };
+  const name = dishes?.name ?? "";
+  const coverImg = dishes?.images?.url;
+  const deliveryTime = `${dishes?.delivey_time} mins` ?? "";
+  const rating = dishes?.ratings ?? "";
+  const approxPrice = `₹${dishes?.price} for one` ?? "";
+  const discount = `${dishes?.discount}% OFF` ?? [];
+  const handleAddtoCart = () => {
+    console.log("Button clicked!");
+    // Your code here to handle the button click event
+  };
   return (
     <div
       className="explore-card cur-pointer"

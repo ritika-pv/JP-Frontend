@@ -35,3 +35,13 @@ export const getCategories = async () => {
     }
   });
 };
+export const getMenuItems = async () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let menuList = await apiInstance.get("/get-items");
+      resolve(menuList);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

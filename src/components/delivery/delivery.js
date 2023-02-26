@@ -1,5 +1,6 @@
-import React from "react";
+import {React,useState, useEffect} from "react";
 import { restaurants } from "../../data/restaurant_data";
+import { getMenuItems } from "../../Utilities/Axios/apiService";
 import ExploreSection from "../common/explore_section/explore";
 import Filters from "../common/filters/filters";
 import "./delivery.css";
@@ -28,13 +29,20 @@ const deliveryFilters = [
 ];
 
 export const Delivery = () => {
+  const[menuItems,setMenuItems]=useState([]);
+  useEffect(()=>{
+    (async function getMenuList(){
+      let menuList = await getMenuItems();
+      setMenuItems((menuList.data.items).slice(0,24))
+    })();
+  },[]);
   return (
     <div>
       <div className="max-width">
         <Filters filterList = {deliveryFilters}/>
       </div>
       <DeliveryCollections/>
-      <ExploreSection list={restaurantList} collectionName = 'Top Dishes'/>
+      <ExploreSection list={menuItems} collectionName = 'Top Dishes'/>
     </div>
   );
 };
