@@ -1,8 +1,10 @@
 import React from "react";
 import "./delivery_items.css";
 const DeliveryItems = ({ item }) => {
+  function handleCategory(name){
+  }
   return (
-    <div>
+    <div onClick={()=>handleCategory(item.category_name)}>
       <div className="delivery-item-cover">
         <img
           src={item.images.url}

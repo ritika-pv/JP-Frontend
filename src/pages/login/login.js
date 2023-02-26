@@ -1,4 +1,4 @@
-import { useState, React } from "react";
+import { useState, useEffect, React } from "react";
 import "./login.css";
 import { login, logout } from "../../reducers/user_slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,11 +51,21 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 
+  useEffect(()=>{
+    const isLoggedIn = localStorage.getItem('userData');
+    if(isLoggedIn){
+      navigate('/');
+    }
+  })
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -67,7 +77,7 @@ const LoginPage = () => {
       });
       setUserData(userData.data.user);
       dispatch(login({ user_data: userData.data.user }));
-      if(userData.data.user){
+      if (userData.data.user) {
         navigate("/");
       }
     } catch (error) {

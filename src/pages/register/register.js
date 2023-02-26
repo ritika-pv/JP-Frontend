@@ -67,6 +67,7 @@ const handleKeyPress = (event) => {
 };
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [stateList, setStateList] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [cityList, setCityList] = useState([]);
@@ -139,6 +140,9 @@ const RegisterPage = () => {
       });
       setUserData(userData.data.user);
       dispatch(login({ user_data: userData.data.user }));
+      if (userData.data.user) {
+        navigate("/");
+      }
     } catch (error) {
       console.log("Registration Failed--", error.response.data.message);
     }
