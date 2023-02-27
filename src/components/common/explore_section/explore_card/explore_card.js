@@ -16,8 +16,7 @@ const ExploreCard = ({ dishes }) => {
   const approxPrice = `₹${dishes?.price} for one` ?? "";
   const discount = `${dishes?.discount}% OFF` ?? [];
   const handleAddtoCart = () => {
-    console.log(dishes, "Button clicked!");
-    // Your code here to handle the button click event
+    dispatch(addToCart({ cartItems: dishes }));
   };
   return (
     <div
