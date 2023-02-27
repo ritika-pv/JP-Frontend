@@ -20,10 +20,15 @@ import Logout from "@mui/icons-material/Logout";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../../reducers/user_slice";
+import Badge from "@mui/material/Badge";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import ManageHistoryRoundedIcon from "@mui/icons-material/ManageHistoryRounded";
 
 export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cartLength = useSelector((state) => state.cart.cartItems);
+  console.log(cartLength.length, "cart ki length");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -42,10 +47,10 @@ export const Header = () => {
   const [userData, setUserDataLocal] = useState("");
 
   useEffect(() => {
-   (async function fetchLocalDataFromStorage(){
-    const local  = await getUserData();
-    setUserDataLocal(local);
-   })()
+    (async function fetchLocalDataFromStorage() {
+      const local = await getUserData();
+      setUserDataLocal(local);
+    })();
   }, []);
   console.log(userData, "userData");
   const isLoggedIn = userData ? true : false;
@@ -97,9 +102,17 @@ export const Header = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
-                    <Avatar sx={{ width: 60, height: 60, bgcolor: "#FB2B55" }}>
-                      {userData.fname[0]}
-                    </Avatar>
+                    <Badge
+                      color="secondary"
+                      variant="dot"
+                      invisible={cartLength.length > 0 ? false : true}
+                    >
+                      <Avatar
+                        sx={{ width: 60, height: 60, bgcolor: "#FB2B55" }}
+                      >
+                        {userData.fname[0]}
+                      </Avatar>
+                    </Badge>
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -139,16 +152,27 @@ export const Header = () => {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <MenuItem onClick={handleClose}>
-                  <Avatar>
-                    <ShoppingCartOutlinedIcon />
-                  </Avatar>
+                  <Badge
+                    badgeContent={cartLength.length}
+                    color="secondary"
+                    sx={{
+                      "& .MuiBadge-badge": {
+                        right: 18,
+                        fontSize: 10,
+                        height: 15,
+                        width: 10,
+                      },
+                    }}
+                  >
+                    <ShoppingCartOutlinedIcon sx={{ mr: 2 }} />
+                  </Badge>
                   My Cart
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Avatar /> My Profile
+                  <PersonOutlineOutlinedIcon sx={{ mr: 2 }} /> My Profile
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Avatar /> My Order
+                  <ManageHistoryRoundedIcon sx={{ mr: 2 }} /> My Order
                 </MenuItem>
                 <Divider />
                 <MenuItem
