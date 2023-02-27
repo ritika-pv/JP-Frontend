@@ -3,8 +3,11 @@ import "./explore_card.css";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../../reducers/add_to_cart_slice";
 
 const ExploreCard = ({ dishes }) => {
+  const dispatch = useDispatch();
   const [style, setStyle] = useState({ visibility: "hidden" });
   const name = dishes?.name ?? "";
   const coverImg = dishes?.images?.url;
@@ -13,7 +16,7 @@ const ExploreCard = ({ dishes }) => {
   const approxPrice = `₹${dishes?.price} for one` ?? "";
   const discount = `${dishes?.discount}% OFF` ?? [];
   const handleAddtoCart = () => {
-    console.log("Button clicked!");
+    console.log(dishes, "Button clicked!");
     // Your code here to handle the button click event
   };
   return (
