@@ -1,16 +1,14 @@
-import React from 'react'
-import CartCard from '../../components/cart_card/cart_card'
-import { Footer } from '../../components/common/footer/footer'
-import { Header } from '../../components/common/header/header'
+import React from "react";
+import { Footer } from "../../components/common/footer/footer";
+import { Cart_Card2 } from "../../components/cart_card/cart_Card2";
 
 const CartPage = () => {
   return (
     <div>
-        <Header/>
-        <CartCard/>
-        <Footer/>
+      <Cart_Card2 />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default CartPage
+export default CartPage;
