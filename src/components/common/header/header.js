@@ -57,7 +57,7 @@ export const Header = () => {
 
   return (
     <div className="max-width header">
-      <img src={logo} alt="Logo" className="header-logo" />
+      <img onClick={()=>navigate('/')} src={logo} alt="Logo" className="header-logo cur-pointer" />
       <div className="header-right">
         <div className="header-location-search-container">
           <div className="location-wrapper">
