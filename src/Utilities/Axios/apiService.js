@@ -1,7 +1,7 @@
 import { apiInstance } from "./apiConfig";
 
 /**
- * @description willbe used for the login operation
+ * @description will be used for the login operation
  * @param data ({email:string,password:string})
  * @param registerData({fame:string,lname:string,phone:string,address:string,city:string,state:string,zip:string,email:string,password:string})
  */
@@ -15,6 +15,7 @@ export const loginUserService = async (data) => {
     }
   });
 };
+
 export const registerUserService = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -25,6 +26,7 @@ export const registerUserService = async (data) => {
     }
   });
 };
+
 export const getCategories = async () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -35,11 +37,23 @@ export const getCategories = async () => {
     }
   });
 };
+
 export const getMenuItems = async () => {
   return new Promise(async (resolve, reject) => {
     try {
       let menuList = await apiInstance.get("/get-items");
       resolve(menuList);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const getCategoryItems = async (slug) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await apiInstance.get(`/category/${slug}`);
+      resolve(data);
     } catch (error) {
       reject(error);
     }

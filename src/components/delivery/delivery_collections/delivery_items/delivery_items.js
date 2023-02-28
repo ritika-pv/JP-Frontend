@@ -1,10 +1,14 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./delivery_items.css";
 const DeliveryItems = ({ item }) => {
-  function handleCategory(name){
+  const navigate = useNavigate();
+
+  function handleCategory(slug) {
+    navigate(`category/${slug}`);
   }
   return (
-    <div onClick={()=>handleCategory(item.category_name)}>
+    <div onClick={() => handleCategory(item.slug)}>
       <div className="delivery-item-cover">
         <img
           src={item.images.url}
@@ -18,4 +22,3 @@ const DeliveryItems = ({ item }) => {
 };
 
 export default DeliveryItems;
-  
