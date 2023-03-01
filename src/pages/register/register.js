@@ -1,44 +1,39 @@
-import { useState, useEffect, React } from "react";
-import "./register.css";
-import { useDispatch, useSelector } from "react-redux";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import Face6TwoToneIcon from "@mui/icons-material/Face6TwoTone";
+import FiberPinOutlinedIcon from "@mui/icons-material/FiberPinOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import LocalPhoneTwoToneIcon from "@mui/icons-material/LocalPhoneTwoTone";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PasswordTwoToneIcon from "@mui/icons-material/PasswordTwoTone";
-import InputAdornment from "@mui/material/InputAdornment";
-import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Face6TwoToneIcon from "@mui/icons-material/Face6TwoTone";
-import LocalPhoneTwoToneIcon from "@mui/icons-material/LocalPhoneTwoTone";
-import { setUserData } from "../../Utilities/Helper/function";
-import { apiInstance } from "../../Utilities/Axios/apiConfig";
-import { getState } from "../../reducers/state_slice";
-import { getCities } from "../../reducers/city_slice";
-import { getAllStates, getSelectedStateData } from "../../data/fetch_state";
-import FiberPinOutlinedIcon from "@mui/icons-material/FiberPinOutlined";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
 import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import Link from "@mui/material/Link";
 import MenuItem from "@mui/material/MenuItem";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { registerUserService } from "../../Utilities/Axios/apiService";
-import Stack from "@mui/material/Stack";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+import Paper from "@mui/material/Paper";
+import Select from "@mui/material/Select";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { React, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getAllStates, getSelectedStateData } from "../../data/fetch_state";
+import { getCities } from "../../reducers/city_slice";
+import { getState } from "../../reducers/state_slice";
 import { login } from "../../reducers/user_slice";
+import { registerUserService } from "../../Utilities/Axios/apiService";
+import { setUserData } from "../../Utilities/Helper/function";
+import "./register.css";
 
 function Copyright(props) {
   return (
@@ -140,10 +135,12 @@ const RegisterPage = () => {
       });
       setUserData(userData.data.user);
       dispatch(login({ user_data: userData.data.user }));
+      toast.success("Registered Successful!");
       if (userData.data.user) {
         navigate("/");
       }
     } catch (error) {
+      toast.error(error.response.data.message);
       console.log("Registration Failed--", error.response.data.message);
     }
   };

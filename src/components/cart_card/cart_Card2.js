@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Scrollbars } from "react-custom-scrollbars-2";
-import { useDispatch, useSelector } from "react-redux";
-import { Items } from "./Items";
-import "./cart.css";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import logo from "../../images/logo.png";
-import { useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
+import React from "react";
+import { Scrollbars } from "react-custom-scrollbars-2";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import logo from "../../images/logo.png";
+import "./cart.css";
+import { Items } from "./Items";
 
 export const Cart_Card2 = () => {
   const navigate = useNavigate();

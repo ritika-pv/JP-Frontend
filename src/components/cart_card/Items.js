@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import "./cart.css";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { removeFromCart } from "../../reducers/add_to_cart_slice";
+import "./cart.css";
 export const Items = ({ slug, _id, name, images, price, ingredients }) => {
   const dispatch = useDispatch();
   return (

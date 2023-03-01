@@ -1,30 +1,31 @@
-import { useState, useEffect, React } from "react";
-import "./login.css";
-import { login, logout } from "../../reducers/user_slice";
-import { useDispatch, useSelector } from "react-redux";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PasswordTwoToneIcon from "@mui/icons-material/PasswordTwoTone";
-import InputAdornment from "@mui/material/InputAdornment";
-import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { setUserData } from "../../Utilities/Helper/function";
-import { apiInstance } from "../../Utilities/Axios/apiConfig";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import CssBaseline from "@mui/material/CssBaseline";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { React, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { login } from "../../reducers/user_slice";
 import { loginUserService } from "../../Utilities/Axios/apiService";
+import { setUserData } from "../../Utilities/Helper/function";
+import "./login.css";
 
 function Copyright(props) {
   return (
@@ -51,21 +52,18 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    const isLoggedIn = localStorage.getItem('userData');
-    if(isLoggedIn){
-      navigate('/');
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("userData");
+    if (isLoggedIn) {
+      navigate("/");
     }
-  })
+  });
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
-
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -77,11 +75,13 @@ const LoginPage = () => {
       });
       setUserData(userData.data.user);
       dispatch(login({ user_data: userData.data.user }));
+      toast.success("Login Successful!");
       if (userData.data.user) {
         navigate("/");
       }
     } catch (error) {
-      console.log("Login Failed With Error---", error);
+      toast.error(error.response.data.message);
+      console.log("Login Failed With Error---", error.response.data.message);
     }
   };
 

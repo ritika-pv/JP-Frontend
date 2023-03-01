@@ -1,12 +1,10 @@
-import {React,useState, useEffect} from "react";
-import { restaurants } from "../../data/restaurant_data";
+import { React, useEffect, useState } from "react";
 import { getMenuItems } from "../../Utilities/Axios/apiService";
 import ExploreSection from "../common/explore_section/explore";
 import Filters from "../common/filters/filters";
 import "./delivery.css";
 import DeliveryCollections from "./delivery_collections/delivery_collection";
 
-const restaurantList = restaurants;
 const deliveryFilters = [
   {
     id: 1,

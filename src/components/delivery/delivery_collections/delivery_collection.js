@@ -1,11 +1,11 @@
-import { React, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import "./delivery_collection.css";
+import { React, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import Slider from "react-slick";
+import { getCategories } from "../../../Utilities/Axios/apiService";
 import NextArrow from "../../common/carousel/next_arrow";
 import PreviousArrow from "../../common/carousel/prev_arrow";
-import Slider from "react-slick";
+import "./delivery_collection.css";
 import DeliveryItems from "./delivery_items/delivery_items";
-import { getCategories } from "../../../Utilities/Axios/apiService";
 const settings = {
   infinite: true,
   centerMode: true,

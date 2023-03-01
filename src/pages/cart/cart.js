@@ -1,6 +1,6 @@
 import React from "react";
-import { Footer } from "../../components/common/footer/footer";
 import { Cart_Card2 } from "../../components/cart_card/cart_Card2";
+import { Footer } from "../../components/common/footer/footer";
 
 const CartPage = () => {
   return (

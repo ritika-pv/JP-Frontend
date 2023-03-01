@@ -4,7 +4,7 @@ const initialState = {
 };
 const StateSlice = createSlice({
   name: "stateList",
-  initialState: initialState,
+ initialState,
   reducers: {
     getState: (state, action) => {
       state.value = action.payload;

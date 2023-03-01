@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from "react";
-import "./header.css";
-import logo from "../../../images/logo.png";
-import profile from "../../../images/profile.jpg";
-import MyTextButton from "../button/buttons";
-import { useNavigate } from "react-router-dom";
-import {
-  clearLocalStorage,
-  getUserData,
-} from "../../../Utilities/Helper/function";
-import Box from "@mui/material/Box";
+import Logout from "@mui/icons-material/Logout";
+import ManageHistoryRoundedIcon from "@mui/icons-material/ManageHistoryRounded";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
-import Logout from "@mui/icons-material/Logout";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import logo from "../../../images/logo.png";
 import { logout } from "../../../reducers/user_slice";
-import Badge from "@mui/material/Badge";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import ManageHistoryRoundedIcon from "@mui/icons-material/ManageHistoryRounded";
+import {
+  clearLocalStorage,
+  getUserData
+} from "../../../Utilities/Helper/function";
+import MyTextButton from "../button/buttons";
+import "./header.css";
 
 export const Header = () => {
   const navigate = useNavigate();

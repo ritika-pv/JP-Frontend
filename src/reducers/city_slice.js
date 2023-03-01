@@ -6,7 +6,7 @@ const initialState = {
 };
 const CitySlice = createSlice({
   name: "cityList",
-  initialState: initialState,
+  initialState,
   reducers: {
     getCities: (state, action) => {
       state.value = action.payload;

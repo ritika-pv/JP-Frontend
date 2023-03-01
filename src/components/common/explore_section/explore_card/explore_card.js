@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import "./explore_card.css";
+import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import AddIcon from "@mui/icons-material/Add";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { addToCart } from "../../../../reducers/add_to_cart_slice";
+import "./explore_card.css";
 
 const ExploreCard = ({ dishes }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const ExploreCard = ({ dishes }) => {
   const discount = `${dishes?.discount}% OFF` ?? [];
   const handleAddtoCart = () => {
     dispatch(addToCart({ cartItems: dishes }));
+    toast.info("Added to Cart")
   };
   return (
     <div
