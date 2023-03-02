@@ -4,10 +4,10 @@ import { addToCart } from "../../reducers/add_to_cart_slice";
 import "./cart.css";
 import { useSelector } from "react-redux";
 
-export const Items = ({ _id, name, images, price, ingredients }) => {
+export const Items = ({ _id, name, images, price, ingredients, quantity }) => {
   // const dispatch = useDispatch();
   // const cartProduct = useSelector((state) => [state.cart.cartItems]);
-
+  console.log(quantity, "quantity h bro");
   function handleDelete() {}
   return (
     <>
@@ -22,11 +22,13 @@ export const Items = ({ _id, name, images, price, ingredients }) => {
 
         <div className="add-minus-quantity">
           <i className="fas fa-minus minus cur-pointer"></i>
-          <input type="text" placeholder="2" />
+          <div style={{ marginLeft: "2rem", marginRight: "2rem" }}>
+            {quantity}
+          </div>
           <i className="fas fa-plus add cur-pointer"></i>
         </div>
 
-        <div className="price">{price}</div>
+        <div className="price">{(price*quantity)}</div>
 
         <div className="remove-item">
           <i
