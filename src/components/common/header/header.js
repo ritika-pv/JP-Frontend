@@ -19,7 +19,7 @@ import { logout } from "../../../reducers/user_slice";
 import { getCartService } from "../../../Utilities/Axios/apiService";
 import {
   clearLocalStorage,
-  getUserData,
+  getUserData
 } from "../../../Utilities/Helper/function";
 import MyTextButton from "../button/buttons";
 import "./header.css";
@@ -169,7 +169,11 @@ export const Header = () => {
               >
                 <MenuItem onClick={() => navigate("/cart")}>
                   <Badge
-                    badgeContent={(cartLength && cartLength[0] && cartLength[0].cartItems)?cartLength[0].cartItems.length : cart.length}
+                    badgeContent={
+                      cartLength && cartLength[0] && cartLength[0].cartItems
+                        ? cartLength[0].cartItems.length
+                        : cart.length
+                    }
                     color="secondary"
                     sx={{
                       "& .MuiBadge-badge": {

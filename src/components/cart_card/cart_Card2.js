@@ -1,17 +1,30 @@
 import { Divider } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
+import { getCartService } from "../../Utilities/Axios/apiService";
+import { getUserData } from "../../Utilities/Helper/function";
 import "./cart.css";
 import { Items } from "./Items";
 
 export const Cart_Card2 = () => {
   const navigate = useNavigate();
-
   const cartProduct = useSelector((state) => [state.cart.cartItems]);
-  console.log(cartProduct, "cart producttss");
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    (async function fetchLocalDataFromStorage() {
+      const local = await getUserData();
+      async function fetchCart(id) {
+        const data = await getCartService(id);
+        setCart(data.data.matchedCart);
+      }
+      await fetchCart(local._id);
+    })();
+  }, []);
+  console.log(cart, "cart producttss");
   return (
     <>
       <section className="main-cart-section">
@@ -30,7 +43,9 @@ export const Cart_Card2 = () => {
             <div className="total-items">
               You have{" "}
               <span className="total-items-count">
-                {cartProduct[0].cartItems.length}
+                {cartProduct && cartProduct[0] && cartProduct[0].cartItems
+                  ? cartProduct[0].cartItems.length
+                  : cart.length}
               </span>{" "}
               items in Food Cart
             </div>
@@ -47,14 +62,12 @@ export const Cart_Card2 = () => {
           <div className="cart-items">
             <div className="cart-items-container">
               <Scrollbars>
-                {cartProduct[0].cartItems.map((curItem) => {
+                {(cartProduct && cartProduct[0] && cartProduct[0].cartItems
+                  ? cartProduct[0].cartItems
+                  : cart
+                ).map((curItem) => {
                   console.log(curItem.cart_product, "curItem");
-                  return (
-                    <Items
-                      key={curItem._id}
-                      {...curItem.cart_product}
-                    />
-                  );
+                  return <Items key={curItem._id} {...curItem.cart_product} />;
                 })}
               </Scrollbars>
             </div>
