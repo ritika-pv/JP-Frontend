@@ -4,20 +4,11 @@ import { addToCart } from "../../reducers/add_to_cart_slice";
 import "./cart.css";
 import { useSelector } from "react-redux";
 
-export const Items = ({ slug, _id, name, images, price, ingredients }) => {
-  const dispatch = useDispatch();
-  const cartProduct = useSelector((state) => [...state.cart.cartItems]);
+export const Items = ({ _id, name, images, price, ingredients }) => {
+  // const dispatch = useDispatch();
+  // const cartProduct = useSelector((state) => [state.cart.cartItems]);
 
-  console.log(cartProduct, "data");
-  function handleDelete() {
-    const indexToDelete = cartProduct.findIndex(
-      (item) => item.cartItems._id === _id
-    );
-    if (indexToDelete !== -1) {
-      cartProduct.splice(indexToDelete, 1);
-      dispatch(addToCart({ cartItems: cartProduct }));
-    }
-  }
+  function handleDelete() {}
   return (
     <>
       <div className="items-info">

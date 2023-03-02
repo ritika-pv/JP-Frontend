@@ -16,9 +16,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../images/logo.png";
 import { logout } from "../../../reducers/user_slice";
+import { getCartService } from "../../../Utilities/Axios/apiService";
 import {
   clearLocalStorage,
-  getUserData
+  getUserData,
 } from "../../../Utilities/Helper/function";
 import MyTextButton from "../button/buttons";
 import "./header.css";
@@ -26,8 +27,8 @@ import "./header.css";
 export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cartLength = useSelector((state) => state.cart.cartItems);
-  console.log(cartLength.length, "cart ki length");
+  const [cart, setCart] = useState([]);
+  const cartLength = useSelector((state) => [state.cart.cartItems]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -49,14 +50,24 @@ export const Header = () => {
     (async function fetchLocalDataFromStorage() {
       const local = await getUserData();
       setUserDataLocal(local);
+
+      async function fetchCart(id) {
+        const data = await getCartService(id);
+        setCart(data.data.matchedCart);
+      }
+      await fetchCart(local._id);
     })();
   }, []);
-  console.log(userData, "userData");
-  const isLoggedIn = userData ? true : false;
 
+  const isLoggedIn = userData ? true : false;
   return (
     <div className="max-width header">
-      <img onClick={()=>navigate('/')} src={logo} alt="Logo" className="header-logo cur-pointer" />
+      <img
+        onClick={() => navigate("/")}
+        src={logo}
+        alt="Logo"
+        className="header-logo cur-pointer"
+      />
       <div className="header-right">
         <div className="header-location-search-container">
           <div className="location-wrapper">
@@ -104,7 +115,13 @@ export const Header = () => {
                     <Badge
                       color="secondary"
                       variant="dot"
-                      invisible={cartLength.length > 0 ? false : true}
+                      invisible={
+                        (cartLength && cartLength[0] && cartLength[0].cartItems
+                          ? cartLength[0].cartItems.length
+                          : cart.length) > 0
+                          ? false
+                          : true
+                      }
                     >
                       <Avatar
                         sx={{ width: 60, height: 60, bgcolor: "#FB2B55" }}
@@ -150,9 +167,9 @@ export const Header = () => {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={()=>navigate("/cart")}>
+                <MenuItem onClick={() => navigate("/cart")}>
                   <Badge
-                    badgeContent={cartLength.length}
+                    badgeContent={(cartLength && cartLength[0] && cartLength[0].cartItems)?cartLength[0].cartItems.length : cart.length}
                     color="secondary"
                     sx={{
                       "& .MuiBadge-badge": {

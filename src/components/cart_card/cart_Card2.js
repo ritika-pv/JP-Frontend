@@ -10,7 +10,7 @@ import { Items } from "./Items";
 export const Cart_Card2 = () => {
   const navigate = useNavigate();
 
-  const cartProduct = useSelector((state) => state.cart.cartItems);
+  const cartProduct = useSelector((state) => [state.cart.cartItems]);
   console.log(cartProduct, "cart producttss");
   return (
     <>
@@ -29,7 +29,9 @@ export const Cart_Card2 = () => {
             <div className="cart-description collection-title">Food Cart</div>
             <div className="total-items">
               You have{" "}
-              <span className="total-items-count">{cartProduct.length}</span>{" "}
+              <span className="total-items-count">
+                {cartProduct[0].cartItems.length}
+              </span>{" "}
               items in Food Cart
             </div>
           </div>
@@ -45,11 +47,12 @@ export const Cart_Card2 = () => {
           <div className="cart-items">
             <div className="cart-items-container">
               <Scrollbars>
-                {cartProduct.map((curItem) => {
+                {cartProduct[0].cartItems.map((curItem) => {
+                  console.log(curItem.cart_product, "curItem");
                   return (
                     <Items
-                      key={curItem.cartItems.slug}
-                      {...curItem.cartItems}
+                      key={curItem._id}
+                      {...curItem.cart_product}
                     />
                   );
                 })}

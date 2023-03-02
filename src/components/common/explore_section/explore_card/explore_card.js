@@ -1,13 +1,25 @@
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "../../../../reducers/add_to_cart_slice";
+import {
+  addToCartService,
+  getCartService,
+} from "../../../../Utilities/Axios/apiService";
+import { getUserData } from "../../../../Utilities/Helper/function";
 import "./explore_card.css";
 
 const ExploreCard = ({ dishes }) => {
+  const [userData, setUserDataLocal] = useState("");
+  useEffect(() => {
+    (async function fetchLocalDataFromStorage() {
+      const local = await getUserData();
+      setUserDataLocal(local);
+    })();
+  }, []);
   const dispatch = useDispatch();
   const [style, setStyle] = useState({ visibility: "hidden" });
   const name = dishes?.name ?? "";
@@ -16,9 +28,26 @@ const ExploreCard = ({ dishes }) => {
   const rating = dishes?.ratings ?? "";
   const approxPrice = `₹${dishes?.price} for one` ?? "";
   const discount = `${dishes?.discount}% OFF` ?? [];
-  const handleAddtoCart = () => {
-    dispatch(addToCart({ cartItems: dishes }));
-    toast.info("Added to Cart")
+  const handleAddtoCart = async () => {
+    try {
+      let addToCart = await addToCartService({
+        user_id: userData._id,
+        cart_product: dishes._id,
+        quantity: 1,
+        price: dishes.price,
+      });
+    } catch (error) {
+      toast.error(error);
+    }
+
+    try {
+      let cartData = await getCartService(userData._id);
+      console.log(cartData, "cartData of api");
+      dispatch(addToCart({ cartItems: cartData.data.matchedCart }));
+    } catch (error) {
+      console.log(error);
+    }
+    toast.info("Added to Cart");
   };
   return (
     <div

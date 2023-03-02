@@ -3,7 +3,6 @@ import { apiInstance } from "./apiConfig";
 /**
  * @description will be used for the login operation
  * @param data ({email:string,password:string})
- * @param registerData({fame:string,lname:string,phone:string,address:string,city:string,state:string,zip:string,email:string,password:string})
  */
 export const loginUserService = async (data) => {
   return new Promise(async (resolve, reject) => {
@@ -15,6 +14,10 @@ export const loginUserService = async (data) => {
     }
   });
 };
+
+/**
+ * @param registerData({fame:string,lname:string,phone:string,address:string,city:string,state:string,zip:string,email:string,password:string})
+ */
 
 export const registerUserService = async (data) => {
   return new Promise(async (resolve, reject) => {
@@ -53,6 +56,31 @@ export const getCategoryItems = async (slug) => {
   return new Promise(async (resolve, reject) => {
     try {
       let data = await apiInstance.get(`/category/${slug}`);
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/**
+ * @param data({user_id:string,cart_product:string,quantity:string,price:string})
+ */
+export const addToCartService = async (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response = await apiInstance.post("/add-to-cart", data);
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const getCartService = async (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await apiInstance.get(`/get-cart/${userId}`);
       resolve(data);
     } catch (error) {
       reject(error);
