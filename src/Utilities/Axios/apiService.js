@@ -76,12 +76,29 @@ export const addToCartService = async (data) => {
     }
   });
 };
-
+/**
+ *
+ * @param  userId
+ */
 export const getCartService = async (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let data = await apiInstance.get(`/get-cart/${userId}`);
       resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/**
+ * @param {userId,cart_id}
+ */
+export const deleteFromCart = async (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response = await apiInstance.post("/delete-cart", data);
+      resolve(response);
     } catch (error) {
       reject(error);
     }

@@ -42,7 +42,6 @@ const ExploreCard = ({ dishes }) => {
 
     try {
       let cartData = await getCartService(userData._id);
-      console.log(cartData, "cartData of api");
       dispatch(addToCart({ cartItems: cartData.data.matchedCart }));
     } catch (error) {
       console.log(error);

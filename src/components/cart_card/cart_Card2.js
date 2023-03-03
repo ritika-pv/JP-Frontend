@@ -21,8 +21,9 @@ export const Cart_Card2 = () => {
       async function fetchCart(id) {
         const data = await getCartService(id);
         setCart(data.data.matchedCart);
+
         const amountList = (
-          cartProduct && cartProduct[0] && cartProduct[0].cartItems
+          cartProduct && cartProduct[0].cartItems
             ? cartProduct[0].cartItems
             : data.data.matchedCart
         ).map((item) => {
@@ -37,7 +38,7 @@ export const Cart_Card2 = () => {
       }
       await fetchCart(local._id);
     })();
-  }, []);
+  }, [cartProduct]);
 
   return (
     <>
@@ -80,7 +81,6 @@ export const Cart_Card2 = () => {
                   ? cartProduct[0].cartItems
                   : cart
                 ).map((curItem) => {
-                  console.log(curItem.quantity, "curItem");
                   return (
                     <Items
                       key={curItem._id}
