@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { addToCart } from "../../reducers/add_to_cart_slice";
-import "./cart.css";
 import {
   addToCartService,
   deleteFromCart,
-  getCartService,
+  getCartService
 } from "../../Utilities/Axios/apiService";
 import { getUserData } from "../../Utilities/Helper/function";
-import { toast } from "react-toastify";
+import "./cart.css";
 
 export const Items = ({ _id, name, images, price, ingredients, quantity }) => {
   const dispatch = useDispatch();
-  // const cartProduct = useSelector((state) => [state.cart.cartItems]);
   const [userData, setUserDataLocal] = useState("");
+  
   useEffect(() => {
     (async function fetchLocalDataFromStorage() {
       const local = await getUserData();

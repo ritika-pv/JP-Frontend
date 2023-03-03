@@ -117,8 +117,8 @@ export const Header = () => {
                       variant="dot"
                       invisible={
                         (cartLength && cartLength[0] && cartLength[0].cartItems
-                          ? cartLength[0].cartItems.length
-                          : cart.length) > 0
+                          ? cartLength[0].cartItems.length //reducer wali
+                          : cart.length) > 0  //api wali
                           ? false
                           : true
                       }
