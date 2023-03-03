@@ -10,13 +10,10 @@ import "./cart.css";
 import { Items } from "./Items";
 
 export const Cart_Card2 = () => {
-  function calculateSum() {
-    return amountList.reduce((next, curr) => next + curr);
-  }
-
   const navigate = useNavigate();
   const cartProduct = useSelector((state) => [state.cart.cartItems]);
   const [cart, setCart] = useState([]);
+  const [totalSum, setTotalSum] = useState([]);
 
   useEffect(() => {
     (async function fetchLocalDataFromStorage() {
@@ -24,18 +21,23 @@ export const Cart_Card2 = () => {
       async function fetchCart(id) {
         const data = await getCartService(id);
         setCart(data.data.matchedCart);
+        const amountList = (
+          cartProduct && cartProduct[0] && cartProduct[0].cartItems
+            ? cartProduct[0].cartItems
+            : data.data.matchedCart
+        ).map((item) => {
+          return item.quantity * item.cart_product.price;
+        });
+
+        function calculateSum(list) {
+          return list.reduce((next, curr) => next + curr, 0);
+        }
+        let sum = calculateSum(amountList);
+        setTotalSum(sum);
       }
       await fetchCart(local._id);
     })();
   }, []);
-  let amountList = (
-    cartProduct && cartProduct[0] && cartProduct[0].cartItems
-      ? cartProduct[0].cartItems
-      : cart
-  ).map((item) => {
-    return item.quantity * item.cart_product.price;
-  });
-  const sum = calculateSum();
 
   return (
     <>
@@ -64,7 +66,7 @@ export const Cart_Card2 = () => {
           </div>
           <div>
             <div className="card-total collection-title">
-              Cart Total : <span>sum &&{sum}</span>
+              Cart Total : <span>{totalSum}</span>
             </div>
             <div className="inclusive">(inclusive of all taxes)</div>
           </div>

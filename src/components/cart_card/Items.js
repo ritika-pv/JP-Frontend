@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 export const Items = ({ _id, name, images, price, ingredients, quantity }) => {
   // const dispatch = useDispatch();
   // const cartProduct = useSelector((state) => [state.cart.cartItems]);
-  console.log(quantity, "quantity h bro");
   function handleDelete() {}
   return (
     <>
