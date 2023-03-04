@@ -3,14 +3,17 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import { Divider } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import logo from "../../images/logo.png";
+import { addToCart } from "../../reducers/add_to_cart_slice";
 import { checkout, getCartService } from "../../Utilities/Axios/apiService";
 import { getUserData } from "../../Utilities/Helper/function";
 import "./cart.css";
 import { Items } from "./Items";
 export const Cart_Card2 = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartProduct = useSelector((state) => [state.cart.cartItems]);
   const [cart, setCart] = useState([]);
@@ -50,21 +53,27 @@ export const Cart_Card2 = () => {
           address: userData.address,
           city: userData.city,
           state: userData.state,
-          pincode: userData.zip,
+          pinCode: userData.zip,
           phoneNo: userData.phone,
         },
         orderItems: (cartProduct && cartProduct[0].cartItems
-          ? cartProduct[0].cartItems.cart_product
+          ? cartProduct[0].cartItems
           : cart
         ).map((items) => {
-          items.cart_product.quantity = items.quantity;
-          return items.cart_product;
+          const updatedProduct = {
+            ...items.cart_product,
+            quantity: items.quantity,
+          };
+          return updatedProduct;
         }),
         totalPrice: totalSum,
       });
-      console.log(response, "response mila hai bro ");
+      let cartData = await getCartService(userData._id);
+      dispatch(addToCart({ cartItems: cartData.data.matchedCart }));
+      toast.success("Order Placed Successfully");
+      navigate("/");
     } catch (err) {
-      console.log(err,"error h bro");
+      console.log(err, "error h bro");
     }
   }
 

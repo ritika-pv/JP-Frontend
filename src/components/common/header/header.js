@@ -58,7 +58,6 @@ export const Header = () => {
       await fetchCart(local._id);
     })();
   }, []);
-
   const isLoggedIn = userData ? true : false;
   return (
     <div className="max-width header">

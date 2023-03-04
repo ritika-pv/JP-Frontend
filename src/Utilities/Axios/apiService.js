@@ -110,16 +110,16 @@ export const checkout = async (data) => {
   console.log(data,"payload");
   const user = await getUserData();
   console.log(user.token);
-  // return new Promise(async (resolve, reject) => {
-  //   try {
-  //     let response = await apiInstance.post("/order/new", data, {
-  //       headers: {
-  //         Authorization: user.token,
-  //       },
-  //     });
-  //     resolve(response);
-  //   } catch (error) {
-  //     reject(error);
-  //   }
-  // });
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response = await apiInstance.post("/order/new", data, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
