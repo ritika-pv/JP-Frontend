@@ -29,24 +29,28 @@ const ExploreCard = ({ dishes }) => {
   const approxPrice = `₹${dishes?.price} for one` ?? "";
   const discount = `${dishes?.discount}% OFF` ?? [];
   const handleAddtoCart = async () => {
-    try {
-      let addToCart = await addToCartService({
-        user_id: userData._id,
-        cart_product: dishes._id,
-        quantity: 1,
-        price: dishes.price,
-      });
-    } catch (error) {
-      toast.error(error);
-    }
+    if (userData) {
+      try {
+        let addToCart = await addToCartService({
+          user_id: userData._id,
+          cart_product: dishes._id,
+          quantity: 1,
+          price: dishes.price,
+        });
+      } catch (error) {
+        toast.error(error);
+      }
 
-    try {
-      let cartData = await getCartService(userData._id);
-      dispatch(addToCart({ cartItems: cartData.data.matchedCart }));
-    } catch (error) {
-      console.log(error);
+      try {
+        let cartData = await getCartService(userData._id);
+        dispatch(addToCart({ cartItems: cartData.data.matchedCart }));
+      } catch (error) {
+        console.log(error);
+      }
+      toast.info("Added to Cart");
+    } else {
+      toast.error("Please Login First");
     }
-    toast.info("Added to Cart");
   };
   return (
     <div
