@@ -5,7 +5,7 @@ import { addToCart } from "../../reducers/add_to_cart_slice";
 import {
   addToCartService,
   deleteFromCart,
-  getCartService
+  getCartService,
 } from "../../Utilities/Axios/apiService";
 import { getUserData } from "../../Utilities/Helper/function";
 import "./cart.css";
@@ -13,7 +13,7 @@ import "./cart.css";
 export const Items = ({ _id, name, images, price, ingredients, quantity }) => {
   const dispatch = useDispatch();
   const [userData, setUserDataLocal] = useState("");
-  
+
   useEffect(() => {
     (async function fetchLocalDataFromStorage() {
       const local = await getUserData();
@@ -52,7 +52,13 @@ export const Items = ({ _id, name, images, price, ingredients, quantity }) => {
         quantity: quantity + 1,
         price: price,
       });
-      console.log(data, "data");
+      try {
+        let cartData = await getCartService(userData._id);
+
+        dispatch(addToCart({ cartItems: cartData.data.matchedCart }));
+      } catch (error) {
+        console.log(error);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -69,7 +75,13 @@ export const Items = ({ _id, name, images, price, ingredients, quantity }) => {
           quantity: quantity - 1,
           price: price,
         });
-        console.log(data, "data");
+        try {
+          let cartData = await getCartService(userData._id);
+
+          dispatch(addToCart({ cartItems: cartData.data.matchedCart }));
+        } catch (error) {
+          console.log(error);
+        }
       } catch (err) {
         console.log(err);
       }

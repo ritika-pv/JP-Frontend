@@ -41,7 +41,7 @@ export const Cart_Card2 = () => {
       }
       await fetchCart(local._id);
     })();
-  }, [cartProduct]);
+  }, [cartProduct[0].cartItems]);
 
   async function HandleCheckout() {
     try {
