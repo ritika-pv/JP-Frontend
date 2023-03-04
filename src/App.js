@@ -23,6 +23,8 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="category/:slug" element={<CategoryPage />} />
+
+      {/*   <Route path="password/reset/:token"  element={ResetPassword/}/> */}
       </Routes>
     </Router>
   );
